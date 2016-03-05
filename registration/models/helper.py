@@ -1,4 +1,5 @@
-from django.core.mail import send_mail
+from django.conf import settings
+from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import m2m_changed, post_save
@@ -6,7 +7,11 @@ from django.dispatch import receiver
 from django.template.loader import get_template
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
+
+from datetime import datetime
+
 import uuid
+import vobject
 
 from badges.models import Badge
 from .job import Job
@@ -183,6 +188,7 @@ class Helper(models.Model):
         if self.shifts.count() == 0:
             return
 
+        # content
         event = self.event
         validate_url = request.build_absolute_uri(reverse('validate',
                                                           args=[event.url_name,
@@ -196,8 +202,27 @@ class Helper(models.Model):
                                      'event': event,
                                      'validate_url': validate_url})
 
-        send_mail(subject, text, event.email, [self.email],
-                  fail_silently=False)
+        # send
+        email = EmailMessage(subject, text, event.email, [self.email])
+        for shift in self.shifts.all():
+            email.attach('{}.ics'.format(shift.id),
+                         self._ical_attachement(shift), 'text/calendar')
+        email.send(fail_silently=False)
+
+    def _ical_attachement(self, shift):
+        cal = vobject.iCalendar()
+        cal.add('method').value = 'PUBLISH'  # IE/Outlook needs this
+
+        vevent = cal.add('vevent')
+        vevent.add('dtstart').value = shift.begin
+        vevent.add('dtend').value = shift.end
+        vevent.add('summary').value = '{} - {}'.format(self.event.name,
+                                                       shift.job.name)
+        vevent.add('uid').value = "{}@{}".format(shift.id,
+                                                 settings.ICS_DOMAIN)
+        vevent.add('dtstamp').value = datetime.now()
+
+        return cal.serialize()
 
     def check_delete(self):
         if self.shifts.count() == 0 and not self.is_coordinator:
