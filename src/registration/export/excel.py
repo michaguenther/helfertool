@@ -85,6 +85,15 @@ def xlsx(buffer, event, jobs, date):
         # header
         worksheet.write(0, column.next(), _("First name"), bold)
         worksheet.write(0, column.next(), _("Surname"), bold)
+
+        if event.ask_address:
+            worksheet.write(0, column.next(), _("Street"), bold)
+            worksheet.set_column(column.get(), column.get(), 20)
+            worksheet.write(0, column.next(), _("Zipcode"), bold)
+            worksheet.set_column(column.get(), column.get(), 10)
+            worksheet.write(0, column.next(), _("City"), bold)
+            worksheet.set_column(column.get(), column.get(), 20)
+
         worksheet.write(0, column.next(), _("E-Mail"), bold)
         worksheet.set_column(0, column.get(), 30)
 
@@ -92,13 +101,21 @@ def xlsx(buffer, event, jobs, date):
             worksheet.write(0, column.next(), _("Mobile phone"), bold)
             worksheet.set_column(column.get(), column.get(), 20)
 
+        if event.ask_course:
+            worksheet.write(0, column.next(), _("Academic course"), bold)
+            worksheet.set_column(column.get(), column.get(), 20)
+
         if event.ask_shirt:
             worksheet.write(0, column.next(), _("T-shirt"), bold)
             worksheet.set_column(column.get(), column.get(), 10)
 
+        if event.ask_fachschaft:
+            worksheet.write(0, column.next(), _("Fachschaft"), bold)
+            worksheet.set_column(column.get(), column.get(), 10)
+
         if event.ask_vegetarian:
             worksheet.write(0, column.next(), _("Vegetarian"), bold)
-            worksheet.set_column(column.get(), column.get(), 13)
+            worksheet.set_column(column.get(), column.get(), 10)
 
         if job.infection_instruction:
             worksheet.write(0, column.next(), _("Food handling"), bold)
@@ -153,11 +170,22 @@ def add_helpers(worksheet, row, column, event, job, helpers,
                         format)
         worksheet.write(row.get(), column.next(), escape(helper.surname),
                         format)
+
+        if event.ask_address:
+            worksheet.write(row.get(), column.next(), escape(helper.street), format)
+            worksheet.write(row.get(), column.next(), escape(helper.zipcode), format)
+            worksheet.write(row.get(), column.next(), escape(helper.city), format)
+
         worksheet.write(row.get(), column.next(), escape(helper.email), format)
         if event.ask_phone:
             worksheet.write(row.get(), column.next(), escape(helper.phone), format)
+        if event.ask_course:
+            worksheet.write(row.get(), column.next(), escape(helper.course), format)
         if event.ask_shirt:
             worksheet.write(row.get(), column.next(), escape(str(helper.get_shirt_display())), format)
+        if event.ask_fachschaft:
+            worksheet.write(row.get(), column.next(),
+                            escape(filters.yesno(helper.member)), format)
         if event.ask_vegetarian:
             worksheet.write(row.get(), column.next(),
                             escape(filters.yesno(helper.vegetarian)), format)
