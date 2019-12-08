@@ -12,10 +12,33 @@
         <td>{{ helper.email }}</td>
     </tr>
 
+
+    {% if event.ask_address %}
+        <tr>
+            <th>{% trans "Street" %}: </th>
+            <td>{{ helper.street }}</td>
+        </tr>
+         <tr>
+            <th>{% trans "Zipcode" %}: </th>
+            <td>{{ helper.zipcode }}</td>
+        </tr>
+         <tr>
+            <th>{% trans "City" %}: </th>
+            <td>{{ helper.city }}</td>
+        </tr>
+    {% endif %}
+
     {% if event.ask_phone %}
         <tr>
             <th>{% trans "Mobile phone" %}: </th>
             <td>{{ helper.phone }}</td>
+        </tr>
+    {% endif %}
+
+    {% if event.ask_course %}
+        <tr>
+            <th>{% trans "Academic course" %}: </th>
+            <td>{{ helper.course }}</td>
         </tr>
     {% endif %}
 
@@ -44,6 +67,13 @@
         <th>{% trans "Comment" %}: </th>
         <td>{{ helper.comment | default:"-" }}</td>
     </tr>
+
+    {% if event.ask_fachschaft %}
+        <tr>
+            <th>{% trans "Fachschaft Maschinenbau" %}: </th>
+            <td>{{ helper.member | yesno }}</td>
+        </tr>
+    {% endif %}
 
     <tr>
         <th>{% trans "Registration time" %}: </th>
