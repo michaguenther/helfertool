@@ -21,7 +21,8 @@ class RegisterForm(forms.ModelForm):
         model = Helper
         fields = ['firstname', 'surname', 'email', 'phone', 'shirt',
                   'vegetarian', 'infection_instruction', 'comment',
-                  'privacy_statement']
+                  'privacy_statement', 'member', 'course',
+                  'street', 'zipcode', 'city']
 
     def __init__(self, *args, **kwargs):
         """ Customize the form.
@@ -49,6 +50,19 @@ class RegisterForm(forms.ModelForm):
         else:
             self.fields['shirt'].choices = self.event.get_shirt_choices(
                                             internal=self.internal)
+        # remove field for fachschaft?
+        if not self.event.ask_fachschaft:
+            self.fields.pop('member')
+
+        # remove field for academic course?
+        if not self.event.ask_course:
+            self.fields.pop('course')
+
+        # remove fields for address
+        if not self.event.ask_address:
+            self.fields.pop('street')
+            self.fields.pop('zipcode')
+            self.fields.pop('city')
 
         # remove field for vegetarian food?
         if not self.event.ask_vegetarian:

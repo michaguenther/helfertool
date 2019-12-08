@@ -34,6 +34,9 @@ class Helper(models.Model):
         :validated: the validation link was clicked (if validation is enabled)
         :mail_failed: a "undelivered" report returned for the registration mail
         :privacy_statement: the privacy statement was accepted
+        :address: street, city, zipcode
+        :fachschaft: member of the fachschaft
+        :course: the academic course
     """
     class Meta:
         ordering = ['event', 'surname', 'firstname']
@@ -134,6 +137,36 @@ class Helper(models.Model):
     privacy_statement = models.BooleanField(
         default=False,
         verbose_name=_("I agree with the data privacy statement."),
+    )
+
+    member = models.BooleanField(
+        default=False,
+        verbose_name=_("I am a member of the Fachschaft Maschinenbau."),
+    )
+
+    course = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name=_("Academic course"),
+    )
+
+    # Address
+    street = models.CharField(
+        blank=True,
+        null=True,
+        max_length=50,
+        verbose_name=_("Street")
+    )
+    zipcode = models.CharField(
+        blank=True,
+        null=True,
+        max_length=5,
+        verbose_name=_("Zipcode")
+    )
+    city = models.CharField(
+        max_length=60,
+        default="München",
+        verbose_name=_("City")
     )
 
     def __str__(self):
