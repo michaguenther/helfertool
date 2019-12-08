@@ -12,7 +12,7 @@ django_select2
 amqp
 celery
 pillow
-python-magic
+python-magic-bin==0.4.14
 pyyaml
 reportlab
 xlsxwriter
