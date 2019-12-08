@@ -12,7 +12,7 @@ RUN apt-get update && \
     # add user, some directories and fix owners
     useradd --shell /bin/bash --home-dir /helfertool2 --create-home helfertool2 --uid 1000 && \
     mkdir /data /log /helfertool2/run && \
-    chown -R helfertool2:helfertool2 /data /log /helfertool/run
+    chown -R helfertool2:helfertool2 /data /log /helfertool2/run
 
 COPY src /helfertool2/src
 COPY deployment/docker/helfertool.sh /usr/local/bin/helfertool2
