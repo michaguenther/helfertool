@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: helfertool\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-08 19:09+0100\n"
+"POT-Creation-Date: 2019-12-08 20:32+0100\n"
 "PO-Revision-Date: 2019-10-27 16:48+0100\n"
 "Last-Translator: Sven Hertle <hertle@fs.tum.de>\n"
 "Language-Team: German <hertle@fs.tum.de>\n"
@@ -28,7 +28,22 @@ msgstr "Vorname"
 msgid "Surname"
 msgstr "Nachname"
 
-#: registration/export/excel.py:88 registration/models/event.py:141
+#: registration/export/excel.py:90 registration/models/helper.py:158
+#: registration/templates/registration/helper_data.html:18
+msgid "Street"
+msgstr "Straße"
+
+#: registration/export/excel.py:92 registration/models/helper.py:164
+#: registration/templates/registration/helper_data.html:22
+msgid "Zipcode"
+msgstr "Postleitzahl"
+
+#: registration/export/excel.py:94 registration/models/helper.py:169
+#: registration/templates/registration/helper_data.html:26
+msgid "City"
+msgstr "Stadt"
+
+#: registration/export/excel.py:97 registration/models/event.py:141
 #: registration/models/helper.py:87
 #: registration/templates/registration/admin/archive_event.html:21
 #: registration/templates/registration/admin/coordinators.html:17
@@ -37,39 +52,48 @@ msgstr "Nachname"
 msgid "E-Mail"
 msgstr "E-Mail"
 
-#: registration/export/excel.py:92 registration/export/pdf.py:45
+#: registration/export/excel.py:101 registration/export/pdf.py:45
 #: registration/models/helper.py:92
 #: registration/templates/registration/admin/coordinators.html:18
-#: registration/templates/registration/helper_data.html:17
+#: registration/templates/registration/helper_data.html:33
 msgid "Mobile phone"
 msgstr "Handynummer"
 
-#: registration/export/excel.py:96 registration/export/pdf.py:48
+#: registration/export/excel.py:105 registration/models/helper.py:150
+#: registration/templates/registration/helper_data.html:40
+msgid "Academic course"
+msgstr "Studiengang"
+
+#: registration/export/excel.py:109 registration/export/pdf.py:48
 #: registration/models/helper.py:105
 #: registration/templates/registration/admin/helpers_table.html:31
-#: registration/templates/registration/helper_data.html:24
+#: registration/templates/registration/helper_data.html:47
 msgid "T-shirt"
 msgstr "T-Shirt"
 
-#: registration/export/excel.py:100 registration/models/helper.py:110
+#: registration/export/excel.py:113
+msgid "Fachschaft"
+msgstr "Fachschaft"
+
+#: registration/export/excel.py:117 registration/models/helper.py:110
 #: registration/templates/registration/admin/helpers_table.html:37
-#: registration/templates/registration/helper_data.html:38
+#: registration/templates/registration/helper_data.html:61
 msgid "Vegetarian"
 msgstr "Vegetarier"
 
-#: registration/export/excel.py:104
+#: registration/export/excel.py:121
 #: registration/templates/registration/admin/helpers_table.html:43
 msgid "Food handling"
 msgstr "Gesundheitsbelehrung"
 
-#: registration/export/excel.py:107 registration/export/pdf.py:50
+#: registration/export/excel.py:124 registration/export/pdf.py:50
 #: registration/models/helper.py:98
 #: registration/templates/registration/admin/helpers_table.html:48
-#: registration/templates/registration/helper_data.html:44
+#: registration/templates/registration/helper_data.html:67
 msgid "Comment"
 msgstr "Kommentar"
 
-#: registration/export/excel.py:122 registration/export/pdf.py:84
+#: registration/export/excel.py:139 registration/export/pdf.py:84
 #: registration/templates/registration/admin/coordinators.html:6
 #: registration/templates/registration/admin/helpers_for_job.html:34
 msgid "Coordinators"
@@ -465,7 +489,7 @@ msgid "This helps us estimating the food for our helpers."
 msgstr "Dies hilft uns, das Helferessen abzuschätzen."
 
 #: registration/models/helper.py:118
-#: registration/templates/registration/helper_data.html:31
+#: registration/templates/registration/helper_data.html:54
 msgid "Instruction for the handling of food"
 msgstr "Belehrung für Umgang mit Lebensmitteln"
 
@@ -480,22 +504,6 @@ msgstr "Ich stimme der Datenschutzerklärung zu."
 #: registration/models/helper.py:144
 msgid "I am a member of the Fachschaft Maschinenbau."
 msgstr "Ich bin Mitglied in der Fachschaft Maschinenbau"
-
-#: registration/models/helper.py:150
-msgid "Academic course"
-msgstr "Studiengang"
-
-#: registration/models/helper.py:158
-msgid "Street"
-msgstr "Straße"
-
-#: registration/models/helper.py:164
-msgid "Zipcode"
-msgstr "Postleitzahl"
-
-#: registration/models/helper.py:169
-msgid "City"
-msgstr "Stadt"
 
 #: registration/models/job.py:42
 msgid "This job is visible publicly"
@@ -989,7 +997,7 @@ msgid "Set attendance for complete shift"
 msgstr "Anwesenheit für komplette Schicht setzen"
 
 #: registration/templates/registration/admin/helpers_table.html:52
-#: registration/templates/registration/helper_data.html:49
+#: registration/templates/registration/helper_data.html:79
 msgid "Registration time"
 msgstr "Anmeldezeit"
 
@@ -1170,7 +1178,13 @@ msgstr "Die öffentliche Anmeldung ist deaktiviert."
 msgid "Manage event"
 msgstr "Veranstaltung verwalten"
 
-#: registration/templates/registration/helper_data.html:55
+#: registration/templates/registration/helper_data.html:73
+#, fuzzy
+#| msgid "I am a member of the Fachschaft Maschinenbau."
+msgid "Fachschaft Maschinenbau"
+msgstr "Ich bin Mitglied in der Fachschaft Maschinenbau"
+
+#: registration/templates/registration/helper_data.html:85
 msgid "Badge Barcode"
 msgstr "Badge Barcode"
 
