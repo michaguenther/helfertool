@@ -4,15 +4,16 @@ set -e
 
 # base directory
 basedir="$(dirname "$(dirname "$(readlink -f "$0")")")"
+github="michaguenther"
 cd "$basedir"
 
 # get git branch and determine tag
 git_branch="$(git rev-parse --abbrev-ref HEAD)"
 
 if [ "$git_branch" == "master" ] ; then
-    docker_tag="helfertool/helfertool:latest"
+    docker_tag="$github/helfertool:latest"
 else
-    docker_tag="helfertool/helfertool:$git_branch"
+    docker_tag="$github/helfertool:$git_branch"
 fi
 
 # build
@@ -35,8 +36,8 @@ elif [ "$1" == "push" ] ; then
     docker push "$docker_tag"
 # pushlatest
 elif [ "$1" == "pushlatest" ] ; then
-    docker tag "$docker_tag" "helfertool/helfertool:latest"
-    docker push "helfertool/helfertool:latest"
+    docker tag "$docker_tag" "$github/helfertool:latest"
+    docker push "$github/helfertool:latest"
 else
     echo -e "Usage:"
     echo
