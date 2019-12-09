@@ -10,29 +10,29 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /usr/share/doc/* && \
     # add user, some directories and fix owners
-    useradd --shell /bin/bash --home-dir /helfertool2 --create-home helfertool2 --uid 1000 && \
-    mkdir /data /log /helfertool2/run && \
-    chown -R helfertool2:helfertool2 /data /log /helfertool2/run
+    useradd --shell /bin/bash --home-dir /helfertool --create-home helfertool --uid 1000 && \
+    mkdir /data /log /helfertool/run && \
+    chown -R helfertool:helfertool /data /log /helfertool/run
 
-COPY src /helfertool2/src
-COPY deployment/docker/helfertool.sh /usr/local/bin/helfertool2
-COPY deployment/docker/uwsgi.conf /helfertool2/uwsgi.conf
-COPY deployment/docker/supervisord.conf /helfertool2/supervisord.conf
-COPY deployment/docker/nginx.conf /helfertool2/nginx.conf
-COPY deployment/docker/rsyslog.conf /helfertool2/rsyslog.conf
+COPY src /helfertool/src
+COPY deployment/docker/helfertool.sh /usr/local/bin/helfertool
+COPY deployment/docker/uwsgi.conf /helfertool/uwsgi.conf
+COPY deployment/docker/supervisord.conf /helfertool/supervisord.conf
+COPY deployment/docker/nginx.conf /helfertool/nginx.conf
+COPY deployment/docker/rsyslog.conf /helfertool/rsyslog.conf
 
-RUN cd /helfertool2/src/ && \
+RUN cd /helfertool/src/ && \
     # install python libs
     pip3 install -r requirements.txt mysqlclient psycopg2-binary uwsgitop && \
     # copy static files
     HELFERTOOL_CONFIG_FILE=/dev/null python3 manage.py collectstatic --noinput && \
-    chmod -R go+rX /helfertool2/static && \
+    chmod -R go+rX /helfertool/static && \
     # fix permissions
-    chmod +x /usr/local/bin/helfertool2
+    chmod +x /usr/local/bin/helfertool
 
 
 VOLUME ["/config", "/data", "/log"]
 EXPOSE 8000
 
-ENTRYPOINT ["/usr/local/bin/helfertool2"]
+ENTRYPOINT ["/usr/local/bin/helfertool"]
 CMD ["run"]

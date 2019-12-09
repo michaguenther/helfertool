@@ -12,12 +12,12 @@ if [ "$USERID" = "0" ] ; then
 fi
 
 if [ "$(id -u)" = "0" ] ; then
-    chown -R $USERID:$GROUPID /var/lib/nginx /var/log/nginx /usr/share/nginx /helfertool2/run
+    chown -R $USERID:$GROUPID /var/lib/nginx /var/log/nginx /usr/share/nginx /helfertool/run
     exec gosu $USERID:$GROUPID "$BASH_SOURCE" "$@"
 fi
 
 # prepare environment
-cd /helfertool2/src
+cd /helfertool/src
 mkdir -p /data/media /data/tmp
 export HELFERTOOL_CONFIG_FILE="/config/helfertool.yaml"
 
@@ -36,16 +36,16 @@ elif [ "$1" = "createadmin" ] ; then
 # command: reload
 elif [ "$1" = "reload" ] ; then
     # reload uwsgi and celery
-    touch /helfertool2/run/uwsgi_reload
+    touch /helfertool/run/uwsgi_reload
 
-    if [ -f "/helfertool2/run/celery.pid" ] ; then
-        kill -HUP $(cat /helfertool2/run/celery.pid)
+    if [ -f "/helfertool/run/celery.pid" ] ; then
+        kill -HUP $(cat /helfertool/run/celery.pid)
     fi
 
 # command: postrotate
 elif [ "$1" = "postrotate" ] ; then
-    if [ -f "/helfertool2/run/rsyslog.pid" ] ; then
-        kill -HUP $(cat /helfertool2/run/rsyslog.pid)
+    if [ -f "/helfertool/run/rsyslog.pid" ] ; then
+        kill -HUP $(cat /helfertool/run/rsyslog.pid)
     fi
 
 # command: manage
@@ -74,7 +74,7 @@ elif [ "$1" = "run" ] ; then
     # run migrations and go
     python3 manage.py migrate --noinput
     python3 manage.py createcachetable
-    exec supervisord --nodaemon --configuration /helfertool2/supervisord.conf
+    exec supervisord --nodaemon --configuration /helfertool/supervisord.conf
 
 # help message
 else
