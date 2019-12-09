@@ -26,7 +26,7 @@ elif [ "$1" == "fastbuild" ] ; then
 elif [ "$1" == "test" ] ; then
     docker run --rm \
         --name helfertool \
-        -p8000:8000 \
+        -p 8001:8000 \
         -v "$PWD/test/docker/data:/data" \
         -v "$PWD/test/docker/config:/config" \
         -v "$PWD/test/docker/log:/log" \
