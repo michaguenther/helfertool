@@ -9,3 +9,4 @@ elif [ "$1" == "run" ] ; then
     -p 127.0.0.1:9000:8000 ikom/helfertool
 elif [ "$1" == "stop" ] ; then
     docker stop ikom/helfertool
+fi
