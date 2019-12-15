@@ -30,8 +30,9 @@ RUN cd /helfertool/src/ && \
     # fix permissions
     chmod +x /usr/local/bin/helfertool
 
+COPY test/docker /
+RUN chown -R helfertool:helfertool config && chown -R helfertool:helfertool data && chown -R helfertool:helfertool log
 
-VOLUME ["/config", "/data", "/log"]
 EXPOSE 8000
 
 ENTRYPOINT ["/usr/local/bin/helfertool"]
