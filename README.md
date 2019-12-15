@@ -3,10 +3,10 @@ Build cmd:
     sudo docker build -t ikom/helfertool .
 Run cmd: 
 
-    sudo docker run -p 9000:8000 ikom/helfertool
+    sudo docker run -v /home/docker/ikom/helfertool/test/docker/config:/config -v /home/docker/ikom/helfertool/test/docker/data:/data -v /home/docker/ikom/helfertool/test/docker/log:/log -p 127.0.0.1:9000:8000 ikom/helfertool
 Run cmd (Daemon): 
 
-    sudo docker run -d -p 9000:8000 --name helfertool ikom/helfertool
+    sudo docker run -d --name helfertool -v /home/docker/ikom/helfertool/test/docker/config:/config -v /home/docker/ikom/helfertool/test/docker/data:/data -v /home/docker/ikom/helfertool/test/docker/log:/log -p 127.0.0.1:9000:8000 ikom/helfertool
 
 Helfertool is a Python3 and Django based tool that allows to manage the
 volunteers or staff for an event.
