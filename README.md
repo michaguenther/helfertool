@@ -4,6 +4,8 @@ Build cmd:
 Run cmd: 
 
     sudo docker run -v /home/docker/ikom/helfertool/test/docker/config:/config -v /home/docker/ikom/helfertool/test/docker/data:/data -v /home/docker/ikom/helfertool/test/docker/log:/log -p 127.0.0.1:9000:8000 ikom/helfertool
+    
+     sudo docker run -v "$PWD/test/docker/config:/config" -p 127.0.0.1:9000:8000 ikom/helfertool
 Run cmd (Daemon): 
 
     sudo docker run -d --name helfertool -v /home/docker/ikom/helfertool/test/docker/config:/config -v /home/docker/ikom/helfertool/test/docker/data:/data -v /home/docker/ikom/helfertool/test/docker/log:/log -p 127.0.0.1:9000:8000 ikom/helfertool
