@@ -1,3 +1,4 @@
+#!/bin/bash
 if [ "$1" == "build" ] ; then
     docker build -t ikom/helfertool .
 elif [ "$1" == "run" ] ; then
