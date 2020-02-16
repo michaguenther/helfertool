@@ -89,6 +89,8 @@ def xlsx(buffer, event, jobs, date):
         if event.ask_address:
             worksheet.write(0, column.next(), _("Street"), bold)
             worksheet.set_column(column.get(), column.get(), 20)
+            worksheet.write(0, column.next(), _("Street  number"), bold)
+            worksheet.set_column(column.get(), column.get(), 10)
             worksheet.write(0, column.next(), _("Zipcode"), bold)
             worksheet.set_column(column.get(), column.get(), 10)
             worksheet.write(0, column.next(), _("City"), bold)
@@ -107,6 +109,10 @@ def xlsx(buffer, event, jobs, date):
 
         if event.ask_shirt:
             worksheet.write(0, column.next(), _("T-shirt"), bold)
+            worksheet.set_column(column.get(), column.get(), 10)
+
+        if event.ask_birthday:
+            worksheet.write(0, column.next(), _("Birthday"), bold)
             worksheet.set_column(column.get(), column.get(), 10)
 
         if event.ask_fachschaft:
@@ -173,6 +179,7 @@ def add_helpers(worksheet, row, column, event, job, helpers,
 
         if event.ask_address:
             worksheet.write(row.get(), column.next(), escape(helper.street), format)
+            worksheet.write(row.get(), column.next(), escape(helper.street_number), format)
             worksheet.write(row.get(), column.next(), escape(helper.zipcode), format)
             worksheet.write(row.get(), column.next(), escape(helper.city), format)
 
@@ -183,6 +190,8 @@ def add_helpers(worksheet, row, column, event, job, helpers,
             worksheet.write(row.get(), column.next(), escape(helper.course), format)
         if event.ask_shirt:
             worksheet.write(row.get(), column.next(), escape(str(helper.get_shirt_display())), format)
+        if event.ask_birthday:
+            worksheet.write(row.get(), column.next(), escape(str(helper.birthday)), format)
         if event.ask_fachschaft:
             worksheet.write(row.get(), column.next(),
                             escape(filters.yesno(helper.member)), format)

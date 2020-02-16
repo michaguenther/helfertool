@@ -34,7 +34,8 @@ class Helper(models.Model):
         :validated: the validation link was clicked (if validation is enabled)
         :mail_failed: a "undelivered" report returned for the registration mail
         :privacy_statement: the privacy statement was accepted
-        :address: street, city, zipcode
+        :address: street, street number, city, zipcode
+        :birthday: the birthday
         :fachschaft: member of the fachschaft
         :course: the academic course
     """
@@ -95,7 +96,7 @@ class Helper(models.Model):
     comment = models.CharField(
         max_length=200,
         blank=True,
-        verbose_name=_("Comment"),
+        verbose_name=_("Comment (e.g. favourite company)"),
     )
 
     shirt = models.CharField(
@@ -150,12 +151,25 @@ class Helper(models.Model):
         verbose_name=_("Academic course"),
     )
 
+    birthday = models.DateField(
+        max_length=200,
+        blank=True,
+        null=True,
+        verbose_name=_("Birthday"),
+    )
+
     # Address
     street = models.CharField(
         blank=True,
         null=True,
         max_length=50,
         verbose_name=_("Street")
+    )
+    street_number = models.CharField(
+        blank=True,
+        null=True,
+        max_length=3,
+        verbose_name=_("Street number")
     )
     zipcode = models.CharField(
         blank=True,

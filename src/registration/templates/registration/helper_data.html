@@ -18,6 +18,10 @@
             <th>{% trans "Street" %}: </th>
             <td>{{ helper.street }}</td>
         </tr>
+        <tr>
+            <th>{% trans "Street number" %}: </th>
+            <td>{{ helper.street_number }}</td>
+        </tr>
          <tr>
             <th>{% trans "Zipcode" %}: </th>
             <td>{{ helper.zipcode }}</td>
@@ -46,6 +50,13 @@
         <tr>
             <th>{% trans "T-shirt" %}: </th>
             <td>{{ helper.get_shirt_display }}</td>
+        </tr>
+    {% endif %}
+
+    {% if event.ask_birthday %}
+        <tr>
+            <th>{% trans "Birthday" %}: </th>
+            <td>{{ helper.birthday }}</td>
         </tr>
     {% endif %}
 

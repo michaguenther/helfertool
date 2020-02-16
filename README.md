@@ -38,6 +38,11 @@ To create the SQLite database for testing, run:
     cd src
     python manage.py migrate
     python manage.py createcachetable
+    
+ Update the structure of the database 
+ 
+    python manage.py makemigrations
+    python manage.py migrate
 
 ## Runserver
 

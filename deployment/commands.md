@@ -14,3 +14,7 @@ Update language file
 * First create updated django.po ```django-admin makemessages -l de```
 * Update the translations
 * compile the file for usage ```django-admin compilemessages```
+
+Change admin passwort:
+
+    python manage.py changepassword
