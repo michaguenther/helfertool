@@ -1,0 +1,322 @@
+%
+% Unless you know what you do you should only change the parts that are marked
+% with "CHANGE".
+%
+
+\documentclass[a4paper,12pt]{article}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[top=10mm,bottom=10mm,left=10mm,right=10mm]{geometry}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage[extendedchars]{grffile}
+\usepackage{ifthen}
+\usepackage[normalem]{ulem}
+\usepackage{color}
+\usepackage[code=Code39,X=.23mm,H=1cm]{makebarcode}
+
+\pagestyle{empty}
+
+\setlength{\parindent}{0mm}
+
+% no padding inside tabular
+\renewcommand{\arraystretch}{0}
+\setlength{\tabcolsep}{0pt}
+
+% strikeout
+\renewcommand{\ULthickness}{3px}
+% custom command to place the line in the middle
+% (necessary due to higher thickness)
+\renewcommand\sout{\bgroup \markoverwith{\rule[0.4ex]{\ULthickness}{\ULthickness}}\ULon}
+
+% Font
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\fontfamily{phv}\selectfont
+
+% Default text color
+\definecolor{fontcolor}{HTML}{000000}
+
+% Variables for badge commands
+\makeatletter
+
+%
+% Data for badge (do not change)
+%
+\newcommand*\badge@firstname{First name}
+\define@key{badge}{firstname}{\renewcommand\badge@firstname{#1}}
+
+\newcommand*\badge@surname{Surname}
+\define@key{badge}{surname}{\renewcommand\badge@surname{#1}}
+
+\newcommand*\badge@job{Job}
+\define@key{badge}{job}{\renewcommand\badge@job{#1}}
+
+\newcommand*\badge@shift{Shift}
+\define@key{badge}{shift}{\renewcommand\badge@shift{#1}}
+
+\newcommand*\badge@role{Role}
+\define@key{badge}{role}{\renewcommand\badge@role{#1}}
+
+\newcommand*\badge@photo{}
+\define@key{badge}{photo}{\renewcommand\badge@photo{#1}}
+
+\newcommand*\badge@roleid{}
+\define@key{badge}{roleid}{\renewcommand\badge@roleid{#1}}
+
+\newcommand*\badge@id{}
+\define@key{badge}{id}{\renewcommand\badge@id{#1}}
+
+%
+% Colors (do not change)
+%
+\newcommand*\badge@fontcolor{000000}
+\define@key{badge}{fontcolor}{\renewcommand\badge@fontcolor{#1}}
+
+\newcommand*\badge@bgcolor{FFFFFF}
+\define@key{badge}{bgcolor}{\renewcommand\badge@bgcolor{#1}}
+
+%
+% Background images (do not change)
+%
+\newcommand*\badge@bgfront{}
+\define@key{badge}{bgfront}{\renewcommand\badge@bgfront{#1}}
+
+\newcommand*\badge@bgback{}
+\define@key{badge}{bgback}{\renewcommand\badge@bgback{#1}}
+
+%
+% CHANGE: Insert your permissions here
+% If you add a permission with the name "foo" in the tool, you have to add
+% the following two lines with "perm-foo".
+% Remember to update or remove the following two sample permissions if you do
+% not use them.
+%
+\newboolean{badge@perm-finance}
+\define@key{badge}{perm-finance}{\setboolean{badge@perm-finance}{#1}}
+
+\newboolean{badge@perm-food}
+\define@key{badge}{perm-food}{\setboolean{badge@perm-food}{#1}}
+%
+% END CHANGE
+%
+
+%
+% Badge
+%
+
+%
+% CHANGE: Badge size
+% When changing these values you have most likely to update the number of
+% rows and columns in the advanced badge settings.
+%
+\newlength{\badgewidth}
+\setlength{\badgewidth}{8cm}
+\newlength{\badgeheight}
+\setlength{\badgeheight}{5cm}
+%
+% END CHANGE
+%
+
+% front
+\newcommand*\badgefront[1][]{%
+    \begingroup%
+    \setkeys{badge}{#1}%
+        \definecolor{fontcolor}{HTML}{\badge@fontcolor}%
+        \definecolor{bgcolor}{HTML}{\badge@bgcolor}%
+        \color{fontcolor}%
+        \begin{tikzpicture}[x=1cm, y=1cm, inner sep=0, outer sep=0, anchor=north west]
+            % background color, rectangle determines size of badge
+            \node (bg) at (0,0) [fill=bgcolor,minimum width=\badgewidth,minimum height=\badgeheight] {};
+
+            % background image
+            \ifthenelse{\equal{\badge@bgfront}{}}
+            {
+            }
+            {
+                \node at (0,0) {\includegraphics[width=\badgewidth, height=\badgeheight]{\badge@bgfront}};
+            }
+
+            % all coordinates are relative to background (0,0) to (1,1)
+            \begin{scope}[shift={(bg.north west)}, x={(bg.north)}, y={(bg.west)}, scale=2]
+                %
+                % CHANGE: this is the content of the front side of the badge.
+                % All coordinates are relative to the badge size:
+                % (0, 0) is the top left corner
+                % (1, 1) is the bottom right corner
+                %
+
+                % name
+                \node[draw=none, text width=0.5\badgewidth] at (0.05,0.1) {\Large \badge@firstname\ \badge@surname};
+
+                % job
+                \node at (0.05,0.5) {\badge@job};
+                % role
+                \node at (0.05,0.6) {\badge@role};
+                % shift
+                \node at (0.05,0.8) {\badge@shift};
+
+                % photo
+                \ifthenelse{\equal{\badge@photo}{}}
+                {
+                }
+                {
+                    \node at (0.6,0.05)  {\includegraphics[width=0.3\badgewidth]{\badge@photo}};
+                }
+
+                %
+                % END CHANGE
+                %
+            \end{scope}
+        \end{tikzpicture}%
+    \endgroup%
+}
+
+%back
+\newcommand*\badgeback[1][]{%
+    \begingroup%
+    \setkeys{badge}{#1}%
+        \definecolor{fontcolor}{HTML}{\badge@fontcolor}%
+        \definecolor{bgcolor}{HTML}{\badge@bgcolor}%
+        \color{fontcolor}%
+        \begin{tikzpicture}[x=1cm,y=1cm, inner sep=0, outer sep=0, anchor=north west]
+            % background color, rectangle determines size of badge
+            \node (bg) at (0,0) [fill=bgcolor,minimum width=\badgewidth,minimum height=\badgeheight] {};
+
+            % background image
+            \ifthenelse{\equal{\badge@bgback}{}}
+            {
+            }
+            {
+                \node at (0,0) {\includegraphics[width=\badgewidth, height=\badgeheight]{\badge@bgback}};
+            }
+
+            % all coordinates are relative to background (0,0) to (1,1)
+            \begin{scope}[shift={(bg.north west)}, x={(bg.north)}, y={(bg.west)}, scale=2]
+                %
+                % CHANGE: same again, but now the back side
+                %
+
+                % rotated name
+                \node[rotate=90, text width=\badgeheight, align=center] at (0.02,1) {\small \badge@firstname\ \badge@surname};
+
+                % food
+                \ifthenelse{\boolean{badge@perm-food}}
+                {
+                    \node at (0.15,0.35) {Freie Verpflegung};
+                }
+                {
+                    \node at (0.15,0.35) {\sout{Freie Verpflegung}};
+                }
+
+                % fiance
+                \ifthenelse{\boolean{badge@perm-finance}}
+                {
+                    \node at (0.15,0.6) {Finanzbereich};
+                }
+                {
+                    \node at (0.15,0.6) {\sout{Finanzbereich}};
+                }
+
+                % barcode (change the position of the barcode if necessary of simply ignore it)
+                \ifthenelse{\equal{\badge@id}{}}
+                {
+                }
+                {
+                    \fill [fill=white] (0.78,0) rectangle (1,1);
+                    \node[rotate=90, text width=\badgeheight, align=center, color=black] at (0.82,1) {\barcode{\badge@id}};
+                }
+
+                %
+                % END CHANGE
+                %
+            \end{scope}
+        \end{tikzpicture}%
+    \endgroup%
+}
+
+%
+% Document
+%
+\begin{document}
+    \centering
+    % The following line is replaced with the generated badge data, do not change it!
+
+    %BADGEDATA%
+
+%
+% For testing
+%
+
+%    \begin{tabular}{|l|l|}
+%        \hline
+%        \badgefront[
+%            surname=b,
+%            bgback=,
+%            job=Aufgabe\ A,
+%            perm-food=true,
+%            bgfront=,
+%            shift=,
+%            roleid=helper,
+%            firstname=a,
+%            photo=,
+%            bgcolor=FFFFFF,
+%            id=0000000010,
+%            fontcolor=000000,
+%            perm-finance=false,
+%            role=Helfer] &
+%        \badgefront[surname=b,
+%            bgback=,
+%            job=Aufgabe\ A,
+%            perm-food=true,
+%            bgfront=,
+%            shift=,
+%            roleid=helper,
+%            firstname=a,
+%            photo=,
+%            bgcolor=FFFFFF,
+%            id=0000000011,
+%            fontcolor=000000,
+%            perm-finance=false,
+%            role=Helfer] \\
+%        \hline
+%    \end{tabular}
+%
+%    \pagebreak
+%
+%    \begin{tabular}{|l|l|}
+%        \hline
+%        \badgeback[surname=b,
+%            bgback=,
+%            job=Aufgabe\ A,
+%            perm-food=true,
+%            bgfront=,
+%            shift=,
+%            roleid=helper,
+%            firstname=a,
+%            photo=,
+%            bgcolor=FFFFFF,
+%            id=0000000011,
+%            fontcolor=000000,
+%            perm-finance=false,
+%            role=Helfer] &
+%        \badgeback[surname=b,
+%            bgback=,
+%            job=Aufgabe\ A,
+%            perm-food=true,
+%            bgfront=,
+%            shift=,
+%            roleid=helper,
+%            firstname=a,
+%            photo=,
+%            bgcolor=FFFFFF,
+%            id=0000000010,
+%            fontcolor=000000,
+%            perm-finance=false,
+%            role=Helfer] \\
+%            \hline
+%    \end{tabular}
+%
+%    \pagebreak
+\end{document}

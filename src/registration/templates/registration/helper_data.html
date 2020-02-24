@@ -1,0 +1,89 @@
+{% load i18n %}
+{% load bootstrap4 %}
+
+<table class="table table-hover">
+    <tr>
+        <th>{% trans "Name" %}: </th>
+        <td>{{ helper.firstname }} {{ helper.surname }}</td>
+    </tr>
+
+    <tr>
+        <th>{% trans "E-Mail" %}: </th>
+        <td>{{ helper.email }}</td>
+    </tr>
+
+
+    {% if event.ask_address %}
+        <tr>
+            <th>{% trans "Street" %}: </th>
+            <td>{{ helper.street }}</td>
+        </tr>
+         <tr>
+            <th>{% trans "Zipcode" %}: </th>
+            <td>{{ helper.zipcode }}</td>
+        </tr>
+         <tr>
+            <th>{% trans "City" %}: </th>
+            <td>{{ helper.city }}</td>
+        </tr>
+    {% endif %}
+
+    {% if event.ask_phone %}
+        <tr>
+            <th>{% trans "Mobile phone" %}: </th>
+            <td>{{ helper.phone }}</td>
+        </tr>
+    {% endif %}
+
+    {% if event.ask_course %}
+        <tr>
+            <th>{% trans "Academic course" %}: </th>
+            <td>{{ helper.course }}</td>
+        </tr>
+    {% endif %}
+
+    {% if event.ask_shirt %}
+        <tr>
+            <th>{% trans "T-shirt" %}: </th>
+            <td>{{ helper.get_shirt_display }}</td>
+        </tr>
+    {% endif %}
+
+    {% if helper.needs_infection_instruction %}
+        <tr>
+            <th>{% trans "Instruction for the handling of food" %}: </th>
+            <td>{{ helper.get_infection_instruction_display }}</td>
+        </tr>
+    {% endif %}
+
+    {% if event.ask_vegetarian %}
+        <tr>
+            <th>{% trans "Vegetarian" %}: </th>
+            <td>{{ helper.vegetarian | yesno }}</td>
+        </tr>
+    {% endif %}
+
+    <tr>
+        <th>{% trans "Comment" %}: </th>
+        <td>{{ helper.comment | default:"-" }}</td>
+    </tr>
+
+    {% if event.ask_fachschaft %}
+        <tr>
+            <th>{% trans "Fachschaft Maschinenbau" %}: </th>
+            <td>{{ helper.member | yesno }}</td>
+        </tr>
+    {% endif %}
+
+    <tr>
+        <th>{% trans "Registration time" %}: </th>
+        <td>{{ helper.timestamp }}</td>
+    </tr>
+
+    {% if badge_barcode %}
+        <tr>
+            <th>{% trans "Badge Barcode" %}</th>
+            <td>{{ badge_barcode }}</td>
+        </tr>
+    {% endif %}
+</table>

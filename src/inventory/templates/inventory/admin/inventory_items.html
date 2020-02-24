@@ -1,0 +1,45 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n bootstrap4 icons inventory %}
+
+{% block admincontent %}
+    <h2>{% trans "Inventory" %}: {{ inventory.name }}</h2>
+
+    <p><a href="{% url 'inventory:new_item' inventory.pk %}">
+        {% icon "plus" %}
+        {% trans "New item" %}
+    </a></p>
+
+    {% if items %}
+        <table class="table">
+            <tr>
+                <th>{% trans "Name" %}</th>
+                <th>{% trans "Barcode" %}</th>
+                <th>{% trans "Comment" %}</th>
+                <th></th>
+            </tr>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.barcode }}</td>
+                    <td>{{ item.comment|truncatechars:20|linebreaks }}</td>
+                    <td>
+                        <a href="{% url "inventory:edit_item" inventory.pk item.pk %}">
+                            {% icon "pencil-alt" %}
+                            {% trans "Edit" %}
+                        </a>
+
+                        <br />
+
+                        <a href="{% url "inventory:delete_item" inventory.pk item.pk %}">
+                            {% icon "trash-alt" %}
+                            {% trans "Delete" %}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p class="text-muted">{% trans "There are no items." %}</p>
+    {% endif %}
+{% endblock %}
+

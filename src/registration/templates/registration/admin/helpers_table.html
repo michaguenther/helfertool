@@ -1,0 +1,104 @@
+{% load i18n bootstrap4 icons %}
+
+{% comment %}
+required parameters:
+    event
+    job
+    helpers
+
+optional:
+    shift
+
+Ff shift is missing this template assumes that the printed helpers are
+coordinators. This is only important for the delete_helper view.
+{% endcomment %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="nosort" data-priority="1"></th>
+
+            <th data-priority="1">
+                {% trans "First name" %}
+            </th>
+
+            <th data-priority="1">
+                {% trans "Surname" %}
+            </th>
+
+            {% if event.ask_shirt %}
+            <th data-priority="5">
+                {% trans "T-shirt" %}
+            </th>
+            {% endif %}
+
+            {% if event.ask_vegetarian %}
+            <th data-priority="6">
+                {% trans "Vegetarian" %}
+            </th>
+            {% endif %}
+
+            {% if job.infection_instruction %}
+            <th data-priority="4">
+                {% trans "Food handling" %}
+            </th>
+            {% endif %}
+
+            <th data-priority="2">
+                {% trans "Comment" %}
+            </th>
+
+            <th data-priority="3">
+                {% trans "Registration time" %}
+            </th>
+
+            <th class="nosort" data-priority="1"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for helper in helpers|dictsort:"timestamp" %}
+            <tr>
+                <td class="datatables-icon"></td>
+                <td>{{ helper.firstname }}</td>
+                <td>{{ helper.surname }}</td>
+                {% if event.ask_shirt %}
+                <td>{{ helper.get_shirt_display }}</td>
+                {% endif %}
+                {% if event.ask_vegetarian %}
+                <td>{{ helper.vegetarian | yesno }}</td>
+                {% endif %}
+                {% if job.infection_instruction %}
+                <td>{{ helper.get_infection_instruction_short }}</td>
+                {% endif %}
+                <td>{{ helper.comment }}</td>
+                <td data-order="{{ helper.timestamp|date:"U" }}" >{{ helper.timestamp }}</td>
+                <td>
+                    <a href="{% url 'view_helper' event.url_name helper.pk %}">
+                        {% icon "search" %}
+                        {% trans "View" %}
+                    </a>
+
+                    <br />
+
+                    {% if shift %}
+                        <a href="{% url 'delete_helper' event.url_name helper.pk shift.pk %}">
+                            {% icon "trash-alt" %}
+                            {% trans "Delete" %}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'delete_coordinator' event.url_name helper.pk job.pk %}">
+                            {% icon "trash-alt" %}
+                            {% trans "Delete" %}
+                        </a>
+                    {% endif %}
+
+                    <br />
+
+                    {% if helper.has_to_validate %}
+                        <span class="text-danger">{% icon "times" %} {% trans "Not validated" %}</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

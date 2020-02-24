@@ -1,0 +1,9 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block admincontent %}
+    <div class="alert alert-danger" role="alert">
+        {% trans "This page is not available since the event is archived." %}
+    </div>
+{% endblock %}

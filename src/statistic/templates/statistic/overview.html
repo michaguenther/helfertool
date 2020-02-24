@@ -1,0 +1,48 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n bootstrap4 staticfiles duration %}
+
+{% block admincontent %}
+    <h2>{% trans "Statistics" %}</h2>
+
+    <table class="table">
+        <tr>
+            <th>{% trans "Number of shift slots" %}</th>
+            <td>{{ num_shift_slots | default:"-" }}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Total number of hours (also free slots)" %}</th>
+            <td>
+                {% if hours_total %}
+                    {{ hours_total | duration_hours }} {% trans "hours" %}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th class="col-sm-4">{% trans "Helpers and coordinators" %}</th>
+            <td class="col-sm-8">{{ num_helpers }}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Coordinators" %}</th>
+            <td>{{ num_coordinators }}</td>
+        </tr>
+        {% if event.ask_vegetarian %}
+            <tr>
+                <th>{% trans "Vegetarians" %}</th>
+                <td>{{ num_vegetarians }}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <th>{% trans "Number of empty shift slots" %}</th>
+            <td>{{ num_empty_shift_slots | default:"-" }}</td>
+        </tr>
+    </table>
+
+    <h3>{% trans "Chronological development of registrations" %}</h3>
+
+    <canvas class="chart" width="400" height="200" data-url="{% url 'statistic:chart_timeline' event.url_name %}" data-empty="overview_empty"></canvas>
+    <p id="overview_empty" class="text-muted d-none">{% trans "No helpers are registered." %}</p>
+
+    <script src="{% static "helfertool/js/chart.js" %}"></script>
+{% endblock %}

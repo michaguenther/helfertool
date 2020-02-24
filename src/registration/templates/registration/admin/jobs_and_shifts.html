@@ -1,0 +1,123 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n bootstrap4 icons %}
+
+{% block admincontent %}
+    <h2>{% trans "Jobs and shifts" %}</h2>
+
+    {% if not event.archived %}
+        <p>
+            <a href="{% url 'new_job' event.url_name %}">
+                {% icon "plus" %}
+                {% trans "New job" %}
+            </a>
+
+            &nbsp;
+
+            <a href="{% url 'sort_job' event.url_name %}">
+                {% icon "sort" %}
+                {% trans "Sort jobs" %}
+            </a>
+        </p>
+    {% endif %}
+
+    {% for job in event.job_set.all %}
+        <h3>
+            {{ job.name }}
+
+            {% if job.public %}
+                <span class="badge badge-outline-dark">
+                    {% icon "eye" %} {% trans "Public" %}
+                </span>
+            {% endif %}
+        </h3>
+
+        {% if not event.archived %}
+            <p>
+                <a href="{% url 'edit_job' event.url_name job.pk %}">
+                {% icon "pencil-alt" %}
+                {% trans "Edit" %}</a>
+
+                &nbsp;
+
+                <a href="{% url 'duplicate_job' event.url_name job.pk %}">
+                {% icon "copy" %}
+                {% trans "Duplicate" %}</a>
+
+                &nbsp;
+
+                <a href="{% url 'duplicate_job_day' event.url_name job.pk %}">
+                {% icon "copy" %}
+                {% trans "Duplicate one day" %}</a>
+
+                &nbsp;
+
+                <a href="{% url 'delete_job' event.url_name job.pk %}">
+                {% icon "trash-alt" %}
+                {% trans "Delete" %}</a>
+
+                &nbsp;
+
+                <a href="{% url 'new_shift' event.url_name job.pk %}">
+                {% icon "plus" %}
+                {% trans "New shift" %}</a>
+            </p>
+        {% endif %}
+
+        {% if job.shift_set.count == 0 %}
+            <p class="text-muted">{% trans "There are no shifts." %}</p>
+        {% else %}
+            <table class="table">
+                <tr>
+                    <th>{% trans "Begin" %}</th>
+                    <th>{% trans "End" %}</th>
+                    <th>{% trans "Name" %}</th>
+                    <th>{% trans "Number of helpers" %}</th>
+                    {% if event.gifts %}
+                        <th>{% trans "Gifts" %}</th>
+                    {% endif %}
+
+                    {% if not event.archived %}
+                        <th></th>
+                    {% endif %}
+                </tr>
+                {% for shift in job.shift_set.all %}
+                    <tr>
+                        <td>
+                            {% if shift.hidden %}
+                                {% icon "eye-slash" %}
+                            {% elif shift.blocked %}
+                                {% icon "lock" %}
+                            {% endif %}
+                            {{ shift.begin }}
+                        </td>
+                        <td>{{ shift.end }}</td>
+                        <td>{{ shift.name }}</td>
+                        <td>{{ shift.number }}</td>
+                        {% if event.gifts %}
+                            <td>
+                                {% for gift in shift.gifts.all %}
+                                    {{ gift.name }}<br/>
+                                {% endfor %}
+                            </td>
+                        {% endif %}
+
+                        {% if not event.archived %}
+                            <td>
+                                <a href="{% url 'edit_shift' event.url_name job.pk shift.pk %}">
+                                    {% icon "pencil-alt" %}
+                                    {% trans "Edit" %}
+                                </a>
+                                <br/>
+                                <a href="{% url 'delete_shift' event.url_name job.pk shift.pk %}">
+                                    {% icon "trash-alt" %}
+                                    {% trans "Delete" %}
+                                </a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block admincontent %}
+    <h2>{% trans "Register: Scan badge" %}</h2>
+
+    {% if not form %}
+        <div class="alert alert-danger">
+            {% trans "You have to scan the item first." %}
+        </div>
+        <a href="{% url 'inventory:register' event.url_name %}" class="btn btn-outline-primary">{% trans "Scan item" %}</a>
+    {% else %}
+        <form action="" method="post">
+            {% csrf_token %}
+
+            {% if already_assigned %}
+                <div class="alert alert-danger">
+                    {% trans "This item is already assigned to another helper." %}
+                </div>
+            {% endif %}
+
+            {% bootstrap_form form show_label=False %}
+        </form>
+
+        <a href="{% url 'inventory:register' event.url_name %}" class="btn btn-outline-primary">{% trans "Scan other item" %}</a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,1 @@
+from .inventory import any_inventory_admin_required, inventory_admin_required

@@ -1,0 +1,61 @@
+{% extends "helfertool/base.html" %}
+{% load i18n bootstrap4 icons permissions %}
+
+{% block title %}
+    {% blocktrans trimmed with eventname=event.name %}
+        Helfertool - {{ eventname }}
+    {% endblocktrans %}
+{% endblock %}
+
+{% block socialheader %}
+    {% if event.logo_social %}
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ MEDIA_URL }}{{ event.logo_social }}" />
+    {% elif event.logo %}
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ MEDIA_URL }}{{ event.logo }}" />
+    {% endif %}
+
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:title" content="{% blocktrans trimmed %}Register for {{ event }} as helper{% endblocktrans %}" />
+    <meta property="og:description" content="{{ event.text | striptags }}" />
+{% endblock %}
+
+{% block content %}
+    {% bootstrap_form_errors form %}
+
+    {% if event.archived %}
+        <div class="alert alert-info" role="alert">
+            {% trans "This event is archived." %}
+        </div>
+    {% elif not event.active and not form.link %}
+        <div class="alert alert-info" role="alert">
+            {% trans "This public registration is disabled." %}
+        </div>
+    {% endif %}
+
+    {% is_involved event as involved %}
+    {% if involved %}
+        <p>
+            <a href="{% url 'manage_event' event_url_name=event.url_name %}" class="btn btn-outline-primary">
+                {% icon "cog" %}
+                {% trans "Manage event" %}
+            </a>
+        </p>
+    {% endif %}
+
+    {% if event.logo %}
+        <img src="{{ MEDIA_URL }}{{ event.logo }}" id="logo" />
+    {% endif %}
+
+    <h1>{{ event }}</h1>
+
+    {{ event.text | safe }}
+
+    {% include "registration/registerform.html" with event=event form=form %}
+
+    {% if event.imprint %}
+        <div class="contact">
+            <p><b>{% trans "Contact" %}</b></p>
+            {{ event.imprint | safe }}
+        </div>
+    {% endif %}
+{% endblock %}

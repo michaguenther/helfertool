@@ -1,0 +1,22 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block admincontent %}
+    <h2>{% trans "Warnings for badge generation" %}</h2>
+
+    {% if not helpers %}
+        <p class="text-muted">{% trans "There are no warnings." %}</p>
+    {% else %}
+        <div class="alert alert-info">
+            <strong>{% trans "Info:" %}</strong>
+            {% trans "The listed persons have more than one job, so you have to select the primary job in the badge settings." %}
+        </div>
+
+        <ul>
+            {% for h in helpers %}
+                <li><a href="{% url 'view_helper' event.url_name h.pk %}">{{ h.firstname }} {{ h.surname }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

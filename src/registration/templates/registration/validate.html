@@ -1,0 +1,27 @@
+{% extends "helfertool/base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% blocktrans trimmed %}
+        Register for {{ event }} as helper
+    {% endblocktrans %}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ event }}</h1>
+
+    <div class="alert alert-info" role="alert">
+        {% if already_validated %}
+            {% trans "Thank you! Your mail address was already confirmed." %}
+        {% else %}
+            {% trans "Thank you! You confirmed your mail address." %}
+        {% endif %}
+    </div>
+
+    {% if event.imprint %}
+        <div class="contact">
+            <p><b>{% trans "Contact" %}</b></p>
+            {{ event.imprint | safe }}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n bootstrap4 toolsettings setting %}
+
+{% block admincontent %}
+    <h2>{% trans "Add user" %}</h2>
+
+    {% htmlsetting "add_user" %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+
+        {% bootstrap_form form %}
+
+        <input type="submit" value="{% trans "Add" %}" class="btn btn-outline-primary" />
+    </form>
+{% endblock %}

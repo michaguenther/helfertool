@@ -1,0 +1,54 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n bootstrap4 staticfiles %}
+
+{% block admincontent %}
+    <h2>{% trans "Send news" %}</h2>
+
+    <p>{% trans "Number of recipients:" %} {{ num_recipients }}</p>
+
+    <form action="" method="post">
+        {% csrf_token %}
+
+        {% bootstrap_form_errors form %}
+
+        <div class="mb-5">
+            {% bootstrap_field form.language %}
+            {% bootstrap_field form.english %}
+        </div>
+
+        {% trans "Subject" as subject %}
+        {% bootstrap_field form.subject addon_before=subject show_label=False %}
+
+        <div class="mailbody">
+            <pre id="englishbelow" class="wraptext">{% include "news/mail/english.txt" %}</pre>
+
+            {% for lang, name in form.languages %}
+                {% language lang %}
+                    <pre id="preface_{{ lang }}" class="mail_preface wraptext">{% include "news/mail/preface.txt" %}</pre>
+                {% endlanguage %}
+            {% endfor %}
+
+            {% bootstrap_field form.text show_label=False %}
+
+            {% for lang, name in form.languages %}
+                {% language lang %}
+                    <pre id="end_{{ lang }}" class="mail_end wraptext">{% include "news/mail/end.txt" %}</pre>
+                {% endlanguage %}
+            {% endfor %}
+
+            <div id="block_en">
+                {% language "en" %}
+                    <pre class="wraptext">{% include "news/mail/preface.txt" %}</pre>
+                {% endlanguage %}
+                {% bootstrap_field form.text_en show_label=False %}
+                {% language "en" %}
+                    <pre class="wraptext">{% include "news/mail/end.txt" %}</pre>
+                {% endlanguage %}
+            </div>
+        </div>
+
+        <input type="submit" value="{% trans "Send" %}" class="btn btn-outline-primary" />
+    </form>
+
+    <script src="{% static "helfertool/js/news.js" %}"></script>
+{% endblock %}

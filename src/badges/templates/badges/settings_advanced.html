@@ -1,0 +1,71 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n bootstrap4 icons %}
+
+{% block admincontent %}
+    <h2>{% trans "Advanced badge settings" %}</h2>
+
+    <div class="alert alert-info" role="alert">
+        {% trans "Changes of most of this settings require an update of the LaTeX template!" %}
+    </div>
+
+    <h3>{% trans "Template" %}</h3>
+
+    <p>
+        {% trans "Here you can get the sample LaTeX template:" %}
+        <a href="{% url 'badges:default_template' event.url_name %}">{% trans "Download" %}</a>
+    </p>
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% bootstrap_form form %}
+
+        {% if not event.archived %}
+            <input type="submit" value="{% trans "Save" %}" class="btn btn-outline-primary" />
+        {% endif %}
+    </form>
+
+
+    <h3>{% trans "Permissions" %}</h3>
+
+    {% if permissions.count == 0 %}
+        <p class="text-muted">{% trans "There are no permissions." %}</p>
+    {% else %}
+        <table class="table">
+            <tr class="d-flex">
+                <th class="col-5">{% trans "Name" %}</th>
+                <th class="col-5">{% trans "LaTeX Name" %}</th>
+                <th class="col-2"></th>
+            </tr>
+
+            {% for perm in permissions %}
+                <tr class="d-flex">
+                    <td class="col-5">{{ perm.name }}</td>
+                    <td class="col-5">{{ perm.latex_name }}</td>
+                    <td class="col-2">
+                        {% if not event.archived %}
+                            <a href="{% url 'badges:edit_permission' event.url_name perm.pk %}">
+                                {% icon "pencil-alt" %} {% trans "Edit" %}
+                            </a>
+                            <br/>
+                            <a href="{% url 'badges:delete_permission' event.url_name perm.pk %}">
+                                {% icon "trash-alt" %} {% trans "Delete" %}
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    {% if not event.archived %}
+        <p>
+            <a href="{% url 'badges:new_permission' event.url_name %}">
+                {% icon "plus" %} {% trans "Add permission" %}
+            </a>
+        </p>
+    {% endif %}
+
+{% endblock %}
+
+

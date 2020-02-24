@@ -1,0 +1,95 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-08 20:32+0100\n"
+"PO-Revision-Date: 2018-10-29 20:03+0100\n"
+"Last-Translator: Sven Hertle <hertle@fs.tum.de>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.11\n"
+
+#: statistic/templates/statistic/overview.html:5
+msgid "Statistics"
+msgstr "Statistiken"
+
+#: statistic/templates/statistic/overview.html:9
+msgid "Number of shift slots"
+msgstr "Anzahl an Schichtslots"
+
+#: statistic/templates/statistic/overview.html:13
+msgid "Total number of hours (also free slots)"
+msgstr "Gesamtzahl an Stunden (auch freie Slots)"
+
+#: statistic/templates/statistic/overview.html:16
+msgid "hours"
+msgstr "Stunden"
+
+#: statistic/templates/statistic/overview.html:23
+#: statistic/templates/statistic/shirts.html:21
+msgid "Helpers and coordinators"
+msgstr "Helfer und Koordinatoren"
+
+#: statistic/templates/statistic/overview.html:27
+#: statistic/templates/statistic/shirts.html:27
+msgid "Coordinators"
+msgstr "Koordinatoren"
+
+#: statistic/templates/statistic/overview.html:32
+msgid "Vegetarians"
+msgstr "Vegetarier"
+
+#: statistic/templates/statistic/overview.html:37
+msgid "Number of empty shift slots"
+msgstr "Anzahl an leeren Schichtslots"
+
+#: statistic/templates/statistic/overview.html:42
+msgid "Chronological development of registrations"
+msgstr "Zeitliche Entwicklung der Anmeldungen"
+
+#: statistic/templates/statistic/overview.html:45
+msgid "No helpers are registered."
+msgstr "Es sind keine Helfer angemeldet."
+
+#: statistic/templates/statistic/shirts.html:7
+#: statistic/templates/statistic/shirts_not_active.html:6
+msgid "T-Shirts"
+msgstr "T-Shirts"
+
+#: statistic/templates/statistic/shirts.html:11
+#: statistic/templates/statistic/shirts.html:65
+msgid "Total"
+msgstr "Insgesamt"
+
+#: statistic/templates/statistic/shirts.html:35
+msgid "Helpers (without coordinators)"
+msgstr "Helfer (ohne Koordinatoren)"
+
+#: statistic/templates/statistic/shirts.html:38
+msgid "Info:"
+msgstr "Hinweis:"
+
+#: statistic/templates/statistic/shirts.html:39
+msgid "The T-shirt of a helper is counted for the first shift."
+msgstr "Das T-Shirt eines Helfers wird zur ersten Schicht gezählt."
+
+#: statistic/templates/statistic/shirts.html:49
+msgid "Shift"
+msgstr "Schicht"
+
+#: statistic/templates/statistic/shirts_not_active.html:9
+msgid "For this event no t-shirt sizes were collected."
+msgstr " Für diese Veranstaltung wurden keine T-Shirt Größen gesammelt."
+
+#: statistic/views/chart.py:52
+msgid "Number of helpers"
+msgstr "Anzahl Helfer"

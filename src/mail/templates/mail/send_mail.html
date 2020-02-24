@@ -1,0 +1,16 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n bootstrap4 staticfiles %}
+
+{% block admincontent %}
+    <h2>{% trans "Send mails" %}</h2>
+
+    <form action="" method="post">
+        {% csrf_token %}
+
+        {% bootstrap_form form %}
+
+        <input type="submit" value="{% trans "Send" %}" class="btn btn-outline-primary" />
+    </form>
+
+    <script src="{% static "helfertool/js/mail_reply_to.js" %}"></script>
+{% endblock %}

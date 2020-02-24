@@ -1,0 +1,102 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n bootstrap4 icons staticfiles %}
+
+{% block admincontent %}
+    <h2>
+        {% blocktrans trimmed with jobname=job.name%}
+            Helpers for {{ jobname }}
+        {% endblocktrans %}
+    </h2>
+
+    {# export #}
+    <p>
+        {% icon "file-download" %}
+        <b class="mr-2">{% trans "Export" %}:</b>
+        <a href="{% url 'export_job' event.url_name 'excel' job.pk %}" class="icon mr-2">
+            <img src="{% static "helfertool/img/icons/xls.svg" %}" class="icon" />
+        </a>
+        <a href="{% url 'export_job' event.url_name 'pdf' job.pk %}" class="icon">
+            <img src="{% static "helfertool/img/icons/pdf.svg" %}" class="icon" />
+        </a>
+    </p>
+
+    {# jump labels #}
+    {% if shifts_by_day %}
+        <p>
+            <i class="fas fa-link"></i>
+            {% for day, shifts in shifts_by_day %}
+                <a href="#{{ day | date:"Ymd" }}">{{ day }}</a>&nbsp;
+            {% endfor %}
+        </p>
+    {% endif %}
+
+    {# coordinators #}
+    <h3>{% trans "Coordinators" %}</h3>
+    {% if job.coordinators.count == 0 %}
+        <p class="text-muted">{% trans "There are no coordinators for this job." %}</p>
+    {% else %}
+        {% include "registration/admin/helpers_table.html" with event=event job=job helpers=job.coordinators.all %}
+    {% endif %}
+
+    <p>
+        <a href="{% url 'add_coordinator' event.url_name job.pk %}">
+            {% icon "plus" %}
+            {% trans "Add coordinator" %}
+        </a>
+   </p>
+
+    {# iterate over days #}
+    {% for day, shifts in shifts_by_day %}
+        <h3 id="{{ day | date:"Ymd" }}">{{ day }}</h3>
+
+        <p>
+            {% with day_str=day|date:"Y-m-d" %}
+                {% icon "file-download" %}
+                <b class="mr-2">{% blocktrans with day=day %}Export for {{ day }}{% endblocktrans %}:</b>
+                <a href="{% url 'export_job_date' event.url_name 'excel' job.pk day_str %}" class="icon mr-2">
+                    <img src="{% static "helfertool/img/icons/xls.svg" %}" class="icon" />
+                </a>
+                <a href="{% url 'export_job_date' event.url_name 'pdf' job.pk day_str %}" class="icon">
+                    <img src="{% static "helfertool/img/icons/pdf.svg" %}" class="icon" />
+                </a>
+            {% endwith %}
+        </p>
+
+        {# iterate over shifts on this day #}
+        {% for shift in shifts %}
+            <h4>{{ shift.time_hours }}
+                {% blocktrans trimmed with current=shift.num_helpers total=shift.number %}
+                    ({{ current }} of {{ total }})
+                {% endblocktrans %}
+                {% if shift.name %}
+                    <br/ >{{ shift.name }}
+                {% endif %}
+            </h4>
+
+            {% if event.gifts and is_admin %}
+            <p>
+                <a href="{% url "gifts:set_present" event.url_name shift.pk %}">
+                    {% icon "check-square" %} {% trans "Set attendance for complete shift" %}
+                </a>
+            </p>
+            {% endif %}
+
+            {% if shift.helper_set.count == 0 %}
+                <p class="text-muted">{% trans "Nobody is registered for this shift." %}</p>
+            {% else %}
+                {% include "registration/admin/helpers_table.html" with event=event job=job shift=shift helpers=shift.helper_set.all %}
+            {% endif %}
+
+            {% if not shift.is_full %}
+                <p>
+                    <a href="{% url 'add_helper' event.url_name shift.pk %}">
+                        {% icon "plus" %}
+                        {% trans "Add helper" %}
+                    </a>
+               </p>
+           {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+    <script src="{% static "helfertool/js/helpers_table.js" %}"></script>
+{% endblock %}

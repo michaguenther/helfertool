@@ -1,0 +1,43 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+
+{% block admincontent %}
+    <h2>{% trans "Register: Scan item" %}</h2>
+
+    <form action="" method="post">
+        {% csrf_token %}
+
+        {% if not_available %}
+            <div class="alert alert-danger">
+                {% trans "This item is already assigned to another helper." %}
+            </div>
+        {% endif %}
+
+        {% bootstrap_form form show_label=False %}
+
+        {% if not_available %}
+            <a href="{% url 'inventory:take_back' event.url_name %}" class="btn btn-outline-danger">{% trans "Take item back" %}</a>
+        {% endif %}
+    </form>
+
+    {% if last_helper and last_helper_items and last_item_name %}
+        <div class="alert alert-info">
+            <b>{{ last_item_name }}</b><br/>
+
+            {% blocktrans trimmed with name as last_helper.full_name %}
+                Assigned to {{ last_helper }}
+            {% endblocktrans %}
+
+            <br/><br/>
+
+            {% trans "The helper now has these items:" %}
+            <ul>
+                {% for used_item in last_helper_items %}
+                    <li>{{ used_item.item.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}
+

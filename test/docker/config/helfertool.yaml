@@ -1,0 +1,26 @@
+database:
+    backend: "sqlite3"
+    name: "/data/db.sqlite3"
+
+security:
+    debug: false
+    allowed_hosts:
+        - "helfer.ikom-tum.de"
+    logout:
+        limit: 10
+customization:
+    urls:
+        imprint: "https://www.ikom.tum.de/de/rechtliches/impressum/"
+        privacy: "https://www.ikom.tum.de/de/rechtliches/datenschutz/"
+    contact_address: "helfertool@ikom.tum.de"
+mail:
+    send:
+        host: "smtp.g-root.de"
+        port: 587
+        user: "helfertool@ikom.1ho.st"
+        password: "cRW6Ot1uGc"
+        tls: false
+        starttls: true
+    sender_address: "IKOM #helfertool <helfertool@ikom.1ho.st>"
+    sender_name: "IKOM #helfertool"
+docker: true

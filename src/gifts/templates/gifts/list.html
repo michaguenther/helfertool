@@ -1,0 +1,69 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n bootstrap4 icons %}
+
+{% block admincontent %}
+    <h2>{% trans "Manage gifts" %}</h2>
+
+    <h3>{% trans "Gifts" %}</h3>
+    <table class="table">
+        <tr>
+            <th>{% trans "Name" %}</th>
+            {% if not event.archived %}
+                <th></th>
+            {% endif %}
+        </tr>
+
+        {% for gift in gifts %}
+            <tr>
+                <td>{{ gift.name }}</td>
+
+                {% if not event.archived %}
+                    <td>
+                        <a href="{% url "gifts:edit_gift" event.url_name gift.pk %}">{% icon "pencil-alt" %} {% trans "Edit" %}</a><br/>
+                        <a href="{% url "gifts:delete_gift" event.url_name gift.pk %}">{% icon "trash-alt" %} {% trans "Delete" %}</a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if not event.archived %}
+        <p><a href="{% url "gifts:add_gift" event.url_name %}">{% icon "plus" %} {% trans "Add gift" %}</a></p>
+    {% endif %}
+
+    <h3>{% trans "Gift sets" %}</h3>
+    <table class="table">
+        <tr>
+            <th>{% trans "Name" %}</th>
+            <th>{% trans "Gifts" %}</th>
+            {% if not event.archived %}
+                <th></th>
+            {% endif %}
+        </tr>
+
+        {% for gift_set in gift_sets %}
+            <tr>
+                <td>{{ gift_set.name }}</td>
+                <td>
+                    <ul>
+                        {% for gift in gift_set.includedgift_set.all %}
+                            <li>{{ gift.count }} {{ gift.gift.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+
+                {% if not event.archived %}
+                    <td>
+                        <a href="{% url "gifts:edit_gift_set" event.url_name gift_set.pk %}">{% icon "pencil-alt" %} {% trans "Edit" %}</a><br/>
+                        <a href="{% url "gifts:delete_gift_set" event.url_name gift_set.pk %}">{% icon "trash-alt" %} {% trans "Delete" %}</a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if not event.archived %}
+        <p><a href="{% url "gifts:add_gift_set" event.url_name %}">{% icon "plus" %} {% trans "Add gift set" %}</a></p>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "helfertool/admin.html" %}
+{% load i18n bootstrap4 staticfiles %}
+
+{% block admincontent %}
+    <h2>{% trans "Generate badges" %}</h2>
+
+    {% if not possible %}
+        <div class="alert alert-danger" role="alert">
+            {% trans "Some settings are missing to generate badges. Check the following settings:" %}
+            <ul>
+                <li>{% trans "LaTeX template" %}</li>
+                <li>{% trans "Default role" %}</li>
+                <li>{% trans "Default design" %}</li>
+            </ul>
+        </div>
+    {% else %}
+        <div id="tasks" data-url="{% url "badges:tasklist" event.url_name %}"></div>
+        <div id="tasks-reload" class="alert alert-info d-none" role="alert">
+            {% trans "Please reload the page (due to inactivity)." %}
+        </div>
+
+        <table class="table">
+            <tr>
+                <th>{% trans "Job" %}</th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            {% for job in jobs %}
+                <tr>
+                    <td>{{ job.name }}</td>
+                    <td>
+                        {% if event.badge_settings.barcodes %}
+                            <a href="{% url "badges:generate_for_job" event.url_name job.pk %}">
+                                {% trans "Unregistered badges" %}
+                            </a>
+                            <br />
+                        {% endif %}
+                        <a href="{% url "badges:generate_all_for_job" event.url_name job.pk %}">
+                            {% trans "All badges" %}
+                        </a>
+                    </td>
+                    <td>
+                        {% if job.num_warnings == 0 %}
+                            {% blocktrans trimmed with num=job.num_warnings %}
+                                {{ num }} warnings
+                            {% endblocktrans %}
+                        {% else %}
+                            <a href="{% url "badges:warnings" event.url_name job.pk %}">
+                                {% blocktrans trimmed with num=job.num_warnings %}
+                                    {{ num }} warnings
+                                {% endblocktrans %}
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        {% if event.badge_settings.barcodes %}
+            <a href="{% url "badges:generate" event.url_name %}">
+                {% trans "All unregistered badges" %}
+            </a>
+            <br />
+        {% endif %}
+        <a href="{% url "badges:generate_all" event.url_name %}">
+            {% trans "Really all badges" %}
+        </a>
+
+        <script src="{% static "helfertool/js/badges_tasks.js" %}"></script>
+    {% endif %}
+{% endblock %}
