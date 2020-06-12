@@ -31,10 +31,7 @@ RUN cd /helfertool/src/ && \
     chmod +x /usr/local/bin/helfertool
 
 VOLUME ["/config", "/data", "/log"]
-<<<<<<< HEAD
 
-=======
->>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
 EXPOSE 8000
 
 ENTRYPOINT ["/usr/local/bin/helfertool"]
