@@ -13,5 +13,9 @@ elif [ "$1" == "start" ] ; then
     docker start ikomhelfertool
 elif [ "$1" == "stop" ] ; then
     docker stop ikomhelfertool
+elif [ "$1" == "rm" ] ; then
+    docker container rm ikomhelfertool
+else
+    echo "commands: build, create, start, stop"
 fi
 
