@@ -19,6 +19,7 @@ Session.vim
 # upload directory and static files
 /media/
 /static/
+/test/
 
 # sqlite database and debugging files
 /db.sqlite3*
