@@ -18,6 +18,13 @@
             <th>{% trans "Street" %}: </th>
             <td>{{ helper.street }}</td>
         </tr>
+<<<<<<< HEAD
+=======
+        <tr>
+            <th>{% trans "Street number" %}: </th>
+            <td>{{ helper.street_number }}</td>
+        </tr>
+>>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
          <tr>
             <th>{% trans "Zipcode" %}: </th>
             <td>{{ helper.zipcode }}</td>
@@ -49,6 +56,16 @@
         </tr>
     {% endif %}
 
+<<<<<<< HEAD
+=======
+    {% if event.ask_birthday %}
+        <tr>
+            <th>{% trans "Birthday" %}: </th>
+            <td>{{ helper.birthday }}</td>
+        </tr>
+    {% endif %}
+
+>>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
     {% if helper.needs_infection_instruction %}
         <tr>
             <th>{% trans "Instruction for the handling of food" %}: </th>

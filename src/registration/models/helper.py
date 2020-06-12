@@ -34,7 +34,12 @@ class Helper(models.Model):
         :validated: the validation link was clicked (if validation is enabled)
         :mail_failed: a "undelivered" report returned for the registration mail
         :privacy_statement: the privacy statement was accepted
+<<<<<<< HEAD
         :address: street, city, zipcode
+=======
+        :address: street, street number, city, zipcode
+        :birthday: the birthday
+>>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
         :fachschaft: member of the fachschaft
         :course: the academic course
     """
@@ -95,7 +100,11 @@ class Helper(models.Model):
     comment = models.CharField(
         max_length=200,
         blank=True,
+<<<<<<< HEAD
         verbose_name=_("Comment"),
+=======
+        verbose_name=_("Comment (e.g. favourite company)"),
+>>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
     )
 
     shirt = models.CharField(
@@ -150,6 +159,16 @@ class Helper(models.Model):
         verbose_name=_("Academic course"),
     )
 
+<<<<<<< HEAD
+=======
+    birthday = models.DateField(
+        max_length=200,
+        blank=True,
+        null=True,
+        verbose_name=_("Birthday"),
+    )
+
+>>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
     # Address
     street = models.CharField(
         blank=True,
@@ -157,6 +176,15 @@ class Helper(models.Model):
         max_length=50,
         verbose_name=_("Street")
     )
+<<<<<<< HEAD
+=======
+    street_number = models.CharField(
+        blank=True,
+        null=True,
+        max_length=3,
+        verbose_name=_("Street number")
+    )
+>>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
     zipcode = models.CharField(
         blank=True,
         null=True,

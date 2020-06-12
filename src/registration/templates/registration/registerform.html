@@ -88,10 +88,20 @@
 
     {% if event.ask_address %}
         <div class="row">
+<<<<<<< HEAD
             <div class="col-lg-6">
                 {% bootstrap_field form.street required_css_class='' %}
             </div>
             <div class="col-lg-2">
+=======
+            <div class="col-lg-4">
+                {% bootstrap_field form.street required_css_class='' %}
+            </div>
+            <div class="col-lg-2">
+                {% bootstrap_field form.street_number required_css_class='' %}
+            </div>
+            <div class="col-lg-2">
+>>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
                 {% bootstrap_field form.zipcode required_css_class='' %}
             </div>
             <div class="col-lg-4">
@@ -130,6 +140,18 @@
 
     </div>
 
+<<<<<<< HEAD
+=======
+    {% if event.ask_birthday %}
+    <div class="row">
+
+            <div class="col-lg-6">
+                {% bootstrap_field form.birthday required_css_class='' %}
+            </div>
+    </div>
+    {% endif %}
+
+>>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
     {% if event.ask_vegetarian %}
     <div class="row">
 

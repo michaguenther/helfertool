@@ -211,6 +211,14 @@ class Event(models.Model):
         verbose_name=_("Ask for T-shirt size"),
     )
 
+<<<<<<< HEAD
+=======
+    ask_birthday = models.BooleanField(
+        default=False,
+        verbose_name=_("Ask for Birthday"),
+    )
+
+>>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
     ask_vegetarian = models.BooleanField(
         default=True,
         verbose_name=_("Ask, if helper is vegetarian"),

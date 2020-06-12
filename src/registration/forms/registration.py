@@ -22,7 +22,11 @@ class RegisterForm(forms.ModelForm):
         fields = ['firstname', 'surname', 'email', 'phone', 'shirt',
                   'vegetarian', 'infection_instruction', 'comment',
                   'privacy_statement', 'member', 'course',
+<<<<<<< HEAD
                   'street', 'zipcode', 'city']
+=======
+                  'street', 'street_number', 'zipcode', 'city', 'birthday']
+>>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
 
     def __init__(self, *args, **kwargs):
         """ Customize the form.
@@ -58,9 +62,20 @@ class RegisterForm(forms.ModelForm):
         if not self.event.ask_course:
             self.fields.pop('course')
 
+<<<<<<< HEAD
         # remove fields for address
         if not self.event.ask_address:
             self.fields.pop('street')
+=======
+        # remove field for birthday?
+        if not self.event.ask_birthday:
+            self.fields.pop('birthday')
+
+        # remove fields for address
+        if not self.event.ask_address:
+            self.fields.pop('street')
+            self.fields.pop('street_number')
+>>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
             self.fields.pop('zipcode')
             self.fields.pop('city')
 

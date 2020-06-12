@@ -1,0 +1,30 @@
+# vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+# VS code
+.vscode
+
+# python/django
+*.pyc
+*.pyo
+*.log
+*.pot
+/venv/
+
+# upload directory and static files
+/media/
+/static/
+
+# sqlite database and debugging files
+/db.sqlite3*
+/badge_debugging.tex
+/src/celerybeat-schedule.db
+/test/docker/data/db.sqlite3
+
+# directory with stuff ;)
+/stuff/

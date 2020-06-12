@@ -1,5 +1,19 @@
+<<<<<<< HEAD
 Build cmd: sudo docker build -t ikom/helfertool .
 Run cmd: sudo docker run -p 9000:8000 ikom/helfertool
+=======
+Build cmd: 
+
+    sudo docker build -t ikom/helfertool .
+Run cmd: 
+
+    sudo docker run -v /home/docker/ikom/helfertool/test/docker/config:/config -v /home/docker/ikom/helfertool/test/docker/data:/data -v /home/docker/ikom/helfertool/test/docker/log:/log -p 127.0.0.1:9000:8000 ikom/helfertool
+    
+     sudo docker run -v "$PWD/test/docker/config:/config" -p 127.0.0.1:9000:8000 ikom/helfertool
+Run cmd (Daemon): 
+
+    sudo docker run -d --name helfertool -v /home/docker/ikom/helfertool/test/docker/config:/config -v /home/docker/ikom/helfertool/test/docker/data:/data -v /home/docker/ikom/helfertool/test/docker/log:/log -p 127.0.0.1:9000:8000 ikom/helfertool
+>>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
 
 Helfertool is a Python3 and Django based tool that allows to manage the
 volunteers or staff for an event.
@@ -29,6 +43,14 @@ To create the SQLite database for testing, run:
     cd src
     python manage.py migrate
     python manage.py createcachetable
+<<<<<<< HEAD
+=======
+    
+ Update the structure of the database 
+ 
+    python manage.py makemigrations
+    python manage.py migrate
+>>>>>>> 5c076aab6e06f1edbef1f810af72f60d4429fe2b
 
 ## Runserver
 
